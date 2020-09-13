@@ -12,7 +12,7 @@ export default () => {
         </div>
         <div className="chatListItem--line">
           <div className="chatListItem--lastMsg">
-            <p>Falaaaaaaa</p>
+            <p>Falaaaaaaa lorrayne linda maravilhosaaaaaaaaaaaaaaaa perfeira</p>
           </div>
         </div>
       </div>
