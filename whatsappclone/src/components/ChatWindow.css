@@ -39,4 +39,61 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  overflow: hidden;
+  transition: all ease 0.3;
+}
+.chatWindow--body{
+  flex: 1;
+  overflow-y: auto;
+  background-color: #E5DDD5;
+  background-size: cover;
+  background-position: top;
+  background-image: url('https://i.redd.it/qwd83nc4xxf41.jpg');
+  padding: 20px 30px;
+}
+.chatWindow--footer{
+  height: 62px;
+  display: flex;
+  align-items: center;
+}
+.chatWindow--pre{
+  display:flex ;
+  margin: 0 15px;
+}
+.chatWindow--inputarea{
+  flex: 1;
+}
+.chatWindow--input{
+  width: 100%;
+  height: 40px;
+  border: 0;
+  outline: 0;
+  background-color: #FFF;
+  border-radius: 20px;
+  font-size: 15px;
+  color: #000;
+  padding-left: 15px;
+}
+.chatWindow--pos{
+  display: flex;
+  margin: 0 15px;
+}
+.chatWindow--emojiarea{
+  height: 200;
+  overflow: hidden;
+  transition: all ease 0.3s ;
+}
+aside.emoji-picker-react{
+  width: auto;
+  background: none;
+}
+.emoji-picker-react .emoji-group:before{
+  background: none;
+}
+.chatWindow--body::-webkit-scrollbar{
+  width: 6px;
+  height: 6px;
+}
+.chatWindow--body::-webkit-scrollbar-thumb{
+  background-color: rgba(0,0,0,0.2);
 }
