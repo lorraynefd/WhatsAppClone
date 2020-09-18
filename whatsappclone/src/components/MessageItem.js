@@ -27,7 +27,7 @@ export default function ({ data, user }) {
       
       >
         <div className="messageText">{data.body}</div>
-        <div className="messageDate">00:00</div>
+        <div className="messageDate">{time}</div>
       </div>
     </div>
   );
