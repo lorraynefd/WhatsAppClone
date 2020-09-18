@@ -1,31 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import Api from './Api';
 import ChatListItem from './components/ChatListItem';
 import ChatWindow from './components/ChatWindow';
 import ChatIntro from './components/ChatIntro';
 import NewChat from './components/NewChat';
+import Login from './components/Login';
 import DonutLargeIcon from '@material-ui/icons/DonutLarge';
 import ChatIcon from '@material-ui/icons/Chat';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import SearchIcon from '@material-ui/icons/Search';
 
 export default () => {
-  const [user, setUser]= useState({
-    id:123,
-    avatar:'https://s1.1zoom.me/big0/856/329183-alexfas01.jpg',
-    name:'Lorrayne'
-  });
-  const [chatlist, setChatList] = useState([
-    {chatId:1, title:'Lorrayne Bonita', image:'https://s1.1zoom.me/big0/856/329183-alexfas01.jpg'},
-    {chatId:2, title:'Lorrayne Maravilhosa', image:'https://s1.1zoom.me/big0/856/329183-alexfas01.jpg'},
-    {chatId:3, title:'Lorrayne Gata', image:'https://s1.1zoom.me/big0/856/329183-alexfas01.jpg'},
-    {chatId:4, title:'Lorrayne Princesa', image:'https://s1.1zoom.me/big0/856/329183-alexfas01.jpg'}
-  ]);
+  const [chatlist, setChatList] = useState([]);
+  const [activeChat, setActiveChat] = useState({});
+  const [user, setUser] = useState(null);
   const [showNewChat, setShowNewChat] = useState(false);
-  const handleNewChat = () =>{
+  useEffect(()=>{
+    if(user !== null){
+      let unsub = Api.onChatList(user.id, setChatList);
+      return unsub;
+    }
+  },[user]);
+  const handleNewChat = () => {
     setShowNewChat(true);
   }
-  const [activeChat, setActiveChat] = useState({});
+  const handleLoginData = async (u) => {
+    let newUser = {
+      id: u.uid,
+      name: u.displayName,
+      avatar: u.photoURL
+    };
+    await Api.addUser(newUser);
+    setUser(newUser);
+  }
+
+  if (user === null) {
+    return (<Login onReceive={handleLoginData} />);
+  }
+
   return (
     <div className="app-window">
       <div className="sidebar">
@@ -61,18 +74,19 @@ export default () => {
         <div className="chatlist">
           {chatlist.map((item, key) => (
             <ChatListItem
-              key={key} 
+              key={key}
               data={item}
               active={activeChat.chatId === chatlist[key].chatId}
-              onClick={()=>setActiveChat(chatlist[key])}
-              />
+              onClick={() => setActiveChat(chatlist[key])}
+            />
           ))}
         </div>
       </div>
       <div className="contentarea">
         {activeChat.chatId !== undefined &&
-          <ChatWindow 
-          user={user}
+          <ChatWindow
+            user={user}
+            data={activeChat}
           />
         }
         {activeChat.chatId === undefined &&
